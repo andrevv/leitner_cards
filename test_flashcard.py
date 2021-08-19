@@ -1,4 +1,4 @@
-from flashcard import Flashcard
+from models import Flashcard
 
 
 def test_init():
