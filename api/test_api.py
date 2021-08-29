@@ -18,15 +18,7 @@ def client():
 def test_api_get_flashcards(client):
     resp = client.get('/api/flashcards')
     assert resp.status_code == 200
-    assert resp.json == [{
-        'id': 1,
-        'question': 'What is the capital of Germany?',
-        'answer': 'Berlin'
-    }, {
-        'id': 2,
-        'question': 'What is the capital of France?',
-        'answer': 'Paris'
-    }]
+    assert resp.json == []
 
 
 def test_api_add_flashcard(client):
@@ -34,4 +26,12 @@ def test_api_add_flashcard(client):
         'question': 'What is the capital of Belgium?',
         'answer': 'Brussels'
     })
+    assert resp.status_code == 201
+    resp = client.get('/api/flashcards')
     assert resp.status_code == 200
+    assert resp.json == [{
+        'id': 1,
+        'question': 'What is the capital of Belgium?',
+        'answer': 'Brussels'
+    }]
+
