@@ -1,9 +1,6 @@
 from dataclasses import dataclass
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String
-
-
-db = SQLAlchemy()
+from api import db
 
 
 @dataclass
