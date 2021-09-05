@@ -28,7 +28,7 @@ function FlashcardList() {
 				<button
 					className="border rounded-lg shadow p-3 bg-green-500 hover:bg-green-700 text-white mt-2"
 					onClick={() => addFlashcard(question, answer)}>
-						Add a Flashcard
+						Add a flashcard
 				</button>
 			</div>
 			<div className="flex flex-wrap">
