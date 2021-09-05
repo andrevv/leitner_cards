@@ -31,7 +31,7 @@ function FlashcardList() {
 						Add a Flashcard
 				</button>
 			</div>
-			<div className="flex">
+			<div className="flex flex-wrap">
 				{flashcards.map(flashcard =>
 					<Flashcard
 						key={flashcard.id}
