@@ -35,3 +35,20 @@ def test_api_add_flashcard(client):
         'answer': 'Brussels'
     }]
 
+
+def test_api_create_session(client):
+    resp = client.post('/api/flashcards', json={
+        'question': 'What is the capital of Belgium?',
+        'answer': 'Brussels'
+    })
+    assert resp.status_code == 201
+    resp = client.post('/api/flashcards', json={
+        'question': 'What is the capital of Italy?',
+        'answer': 'Rome'
+    })
+    assert resp.status_code == 201
+    resp = client.post('/api/training')
+    assert resp.status_code == 201
+    resp = client.get('/api/training')
+    print(resp.json)
+    assert resp.status_code == 200

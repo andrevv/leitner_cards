@@ -14,8 +14,13 @@ def create_app(test_config=None):
     db.init_app(app)
     app.cli.add_command(init_db_command)
 
+    app.url_map.strict_slashes = False
+
     from api import flashcards
     app.register_blueprint(flashcards.bp)
+
+    from api import training
+    app.register_blueprint(training.bp)
 
     with app.app_context():
         init_db()

@@ -1,6 +1,6 @@
 import './App.css'
 import FlashcardList from './FlashcardList';
-import FlashcardPractice from './FlashcardPractice';
+import TrainingSession from './TrainingSession';
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,7 +24,7 @@ function App() {
 
           <Switch>
             <Route path="/practice">
-              <FlashcardPractice />
+              <TrainingSession />
             </Route>
             <Route path="/">
               <FlashcardList />
