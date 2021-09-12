@@ -15,7 +15,6 @@ def session():
     if active:
         query = query.where(TrainingSession.active)
     result = db.session.execute(query).fetchone()
-    print(result)
     if result is None:
         return jsonify()
     return jsonify(result[0])

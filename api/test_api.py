@@ -49,6 +49,37 @@ def test_api_create_session(client):
     assert resp.status_code == 201
     resp = client.post('/api/training')
     assert resp.status_code == 201
+    assert resp.json == {
+        'id': 1,
+        'active': True,
+        'flashcards': [{
+            'flashcard': {
+                'id': 1,
+                'question': 'What is the capital of Belgium?',
+                'answer': 'Brussels'
+            }
+        }, {
+            'flashcard': {
+                'id': 2,
+                'question': 'What is the capital of Italy?',
+                'answer': 'Rome'}
+        }]
+    }
     resp = client.get('/api/training')
-    print(resp.json)
     assert resp.status_code == 200
+    assert resp.json == {
+        'id': 1,
+        'active': True,
+        'flashcards': [{
+            'flashcard': {
+                'id': 1,
+                'question': 'What is the capital of Belgium?',
+                'answer': 'Brussels'
+            }
+        }, {
+            'flashcard': {
+                'id': 2,
+                'question': 'What is the capital of Italy?',
+                'answer': 'Rome'}
+        }]
+    }
