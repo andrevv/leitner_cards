@@ -38,3 +38,13 @@ def delete_session(session_id):
     db.session.execute(delete(TrainingSession).where(TrainingSession.id == session_id))
     db.session.commit()
     return Response(status=200)
+
+
+@bp.route('/training/sessions/<int:session_id>/flashcards/<int:flashcard_id>/answer', methods=['POST'])
+def answer(session_id, flashcard_id):
+    sess = db.session.execute(select(TrainingSession).where(TrainingSession.id == session_id)).fetchone()[0]
+    for card in sess.flashcards:
+        if card.flashcard.id == flashcard_id:
+            if card.flashcard.answer == request.json['answer']:
+                return 'correct'
+    return 'incorrect'

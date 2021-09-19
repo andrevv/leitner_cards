@@ -35,8 +35,12 @@ function TrainingSession() {
 			}
 			{
 				session &&
-				<div className="flex flex-wrap">
-					{session.flashcards?.map(flashcard => <TrainingSessionFlashcard key={flashcard.flashcard.id} question={flashcard.flashcard.question} answer={flashcard.flashcard.answer} />)}
+				<div>
+					{session.flashcards?.map(flashcard =>
+						<TrainingSessionFlashcard
+							key={flashcard.flashcard.id}
+							flashcard={flashcard.flashcard}
+							sessionId={session.id} />)}
 				</div>
 			}
 		</>
