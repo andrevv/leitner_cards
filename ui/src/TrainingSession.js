@@ -27,8 +27,16 @@ function TrainingSession() {
 			}
 			{
 				session &&
+				<button
+					className="border rounded-lg shadow p-3 bg-green-500 hover:bg-green-700 text-white mt-2"
+					onClick={() => deleteSession(session.id)}>
+						Delete session
+				</button>
+			}
+			{
+				session &&
 				<div className="flex flex-wrap">
-					{session.flashcards.map(flashcard => <TrainingSessionFlashcard key={flashcard.flashcard.id} question={flashcard.flashcard.question} answer={flashcard.flashcard.answer} />)}
+					{session.flashcards?.map(flashcard => <TrainingSessionFlashcard key={flashcard.flashcard.id} question={flashcard.flashcard.question} answer={flashcard.flashcard.answer} />)}
 				</div>
 			}
 		</>
@@ -41,6 +49,15 @@ function TrainingSession() {
 			.then(resp => resp.json())
 			.then(data => {
 				setSession(data)
+			})
+	}
+
+	function deleteSession(id) {
+		fetch(`http://localhost:5000/api/training/${id}`, {
+				method: 'DELETE'
+			})
+			.then(() => {
+				setSession(null)
 			})
 	}
 }

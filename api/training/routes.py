@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, Response
-from sqlalchemy import select
+from sqlalchemy import select, delete
 
 from api import db
 from api.flashcards.models import Flashcard
@@ -16,7 +16,7 @@ def session():
         query = query.where(TrainingSession.active)
     result = db.session.execute(query).fetchone()
     if result is None:
-        return jsonify()
+        return Response(status=404)
     return jsonify(result[0])
 
 
@@ -30,3 +30,11 @@ def create_session():
     response = jsonify(training_session)
     response.status = 201
     return response
+
+
+@bp.route('/training/<int:session_id>', methods=['DELETE'])
+def delete_session(session_id):
+    db.session.execute(delete(TrainingSessionFlashcard).where(TrainingSessionFlashcard.session_id == session_id))
+    db.session.execute(delete(TrainingSession).where(TrainingSession.id == session_id))
+    db.session.commit()
+    return Response(status=200)
