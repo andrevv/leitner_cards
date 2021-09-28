@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import TrainingSessionFlashcard from './TrainingSessionFlashcard'
 
 function TrainingSession() {
-	const [flashcards, setFlashcards] = useState([])
 	const [session, setSession] = useState()
+	const [flashcardIndex, setFlashcardIndex] = useState(0)
 
 	useEffect(() => {
 		fetch('http://localhost:5000/api/training', {
@@ -35,19 +35,16 @@ function TrainingSession() {
 			}
 			{
 				session &&
-				<div>
-					{session.flashcards?.map(flashcard =>
-						<TrainingSessionFlashcard
-							key={flashcard.flashcard.id}
-							flashcard={flashcard.flashcard}
-							sessionId={session.id} />)}
-				</div>
+				<TrainingSessionFlashcard
+					flashcard={session.flashcards[flashcardIndex].flashcard}
+					sessionId={session.id}
+					onCorrectAnswer={handleCorrectAnswer} />
 			}
 		</>
 	)
 
 	function createSession() {
-		fetch('http://localhost:5000/api/training', {
+		fetch('http://localhost:5000/api/training/sessions', {
 				method: 'POST'
 			})
 			.then(resp => resp.json())
@@ -63,6 +60,10 @@ function TrainingSession() {
 			.then(() => {
 				setSession(null)
 			})
+	}
+
+	function handleCorrectAnswer() {
+		setFlashcardIndex(curr => curr + 1)
 	}
 }
 

@@ -37,6 +37,7 @@ def test_api_add_flashcard(client):
 
 
 def test_api_create_session(client):
+    # Create flashcards
     resp = client.post('/api/flashcards', json={
         'question': 'What is the capital of Belgium?',
         'answer': 'Brussels'
@@ -47,7 +48,9 @@ def test_api_create_session(client):
         'answer': 'Rome'
     })
     assert resp.status_code == 201
-    resp = client.post('/api/training')
+
+    # Create a session
+    resp = client.post('/api/training/sessions')
     assert resp.status_code == 201
     assert resp.json == {
         'id': 1,

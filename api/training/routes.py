@@ -20,7 +20,7 @@ def session():
     return jsonify(result[0])
 
 
-@bp.route('/training', methods=['POST'])
+@bp.route('/training/sessions', methods=['POST'])
 def create_session():
     training_session = TrainingSession(active=True)
     for card in db.session.execute(select(Flashcard)).scalars():
