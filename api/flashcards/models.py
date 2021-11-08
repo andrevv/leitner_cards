@@ -20,3 +20,11 @@ class Flashcard(db.Model):
         self.question = question
         self.answer = answer
         self.bucket = bucket
+
+
+@dataclass
+class AttemptResult:
+    is_correct: bool
+
+    def __init__(self, is_correct):
+        self.is_correct = is_correct
