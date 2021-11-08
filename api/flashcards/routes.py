@@ -14,7 +14,7 @@ def get_flashcards():
 @bp.route('/flashcards', methods=['POST'])
 def add_flashcard():
     data = request.json
-    flashcard = Flashcard(question=data['question'], answer=data['answer'])
+    flashcard = Flashcard(question=data['question'], answer=data['answer'], bucket=0)
     db.session.add(flashcard)
     db.session.commit()
     return Response(status=201)

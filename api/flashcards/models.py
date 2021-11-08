@@ -9,11 +9,14 @@ class Flashcard(db.Model):
     id: int
     question: str
     answer: str
+    bucket: int
 
     id = Column('id', Integer, primary_key=True)
     question = Column('question', String, nullable=False)
     answer = Column('answer', String, nullable=False)
+    bucket = Column('bucket', Integer, nullable=False)
 
-    def __init__(self, question, answer):
+    def __init__(self, question, answer, bucket):
         self.question = question
         self.answer = answer
+        self.bucket = bucket

@@ -4,7 +4,6 @@ import tempfile
 import pytest
 
 from api import create_app
-from api.flashcards.services import FlashcardService, Flashcard
 
 
 @pytest.fixture
@@ -31,10 +30,12 @@ def test_api_add_flashcard(client):
     assert resp.status_code == 201
     resp = client.get('/api/flashcards')
     assert resp.status_code == 200
+    print(resp.json)
     assert resp.json == [{
         'id': 1,
         'question': 'What is the capital of Belgium?',
-        'answer': 'Brussels'
+        'answer': 'Brussels',
+        'bucket': 0
     }]
 
 
@@ -61,13 +62,16 @@ def test_api_create_session(client):
             'flashcard': {
                 'id': 1,
                 'question': 'What is the capital of Belgium?',
-                'answer': 'Brussels'
+                'answer': 'Brussels',
+                'bucket': 0
             }
         }, {
             'flashcard': {
                 'id': 2,
                 'question': 'What is the capital of Italy?',
-                'answer': 'Rome'}
+                'answer': 'Rome',
+                'bucket': 0
+            }
         }]
     }
     resp = client.get('/api/training')
@@ -79,26 +83,15 @@ def test_api_create_session(client):
             'flashcard': {
                 'id': 1,
                 'question': 'What is the capital of Belgium?',
-                'answer': 'Brussels'
+                'answer': 'Brussels',
+                'bucket': 0
             }
         }, {
             'flashcard': {
                 'id': 2,
                 'question': 'What is the capital of Italy?',
-                'answer': 'Rome'}
+                'answer': 'Rome',
+                'bucket': 0
+            }
         }]
     }
-
-
-def test_foo():
-    cards = [
-        Flashcard(key=1, question='What is the capital of Italy?', answer='Rome'),
-        Flashcard(key=2, question='What is the capital of Germany?', answer='Berlin')
-    ]
-    fc = FlashcardService(flashcards=cards)
-    bucket = fc.get_bucket(0)
-    assert len(bucket) == 2
-    print()
-    print([c.updated for c in cards])
-    fc.answer(cards[0])
-    print([c.updated for c in cards])
