@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
 
 function PracticeFlashcard(props) {
-    const [answer, setAnswer] = useState()
+    const [answer, setAnswer] = useState('')
 
     useEffect(() => {
-        setAnswer(null)
+        setAnswer('')
     }, [answer])
 
     return (
