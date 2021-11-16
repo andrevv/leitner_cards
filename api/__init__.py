@@ -22,9 +22,6 @@ def create_app(test_config=None):
     from api import flashcards
     app.register_blueprint(flashcards.bp)
 
-    # from api import training
-    # app.register_blueprint(training.bp)
-
     with app.app_context():
         init_db()
 
