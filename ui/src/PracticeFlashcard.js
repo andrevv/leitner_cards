@@ -19,7 +19,7 @@ function PracticeFlashcard(props) {
                 <button
                     className={'border rounded-lg shadow p-3 bg-green-500 hover:bg-green-700 text-white mt-3 w-full'}
                     onClick={() => attempt(props.flashcard, answer)}>
-                    Next
+                    Check
                 </button>
             </div>
         </>
