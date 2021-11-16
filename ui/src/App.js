@@ -1,12 +1,12 @@
 import './App.css'
-import FlashcardList from './FlashcardList';
-import TrainingSession from './TrainingSession';
+import FlashcardList from './FlashcardList'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+import Practice from "./Practice";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
 
           <Switch>
             <Route path="/practice">
-              <TrainingSession />
+              <Practice />
             </Route>
             <Route path="/">
               <FlashcardList />

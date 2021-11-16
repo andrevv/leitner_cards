@@ -1,5 +1,7 @@
 from dataclasses import dataclass
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
 from api import db
 
 
@@ -20,6 +22,20 @@ class Flashcard(db.Model):
         self.question = question
         self.answer = answer
         self.bucket = bucket
+
+
+@dataclass
+class TrainingSession(db.Model):
+    __tablename__ = 'training_sessions'
+    id: int
+    current_flashcard: Flashcard
+
+    id = Column('id', Integer, primary_key=True)
+    current_flashcard_id = Column('current_flashcard_id', Integer, ForeignKey('flashcards.id'), nullable=False)
+    current_flashcard = relationship('Flashcard')
+
+    def __init__(self, current_flashcard_id):
+        self.current_flashcard_id = current_flashcard_id
 
 
 @dataclass

@@ -9,8 +9,10 @@ db = SQLAlchemy()
 
 def create_app(test_config=None):
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flashcard.db'
+    if test_config:
+        app.config['SQLALCHEMY_DATABASE_URI'] = test_config['SQLALCHEMY_DATABASE_URI']
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flashcard.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     app.cli.add_command(init_db_command)
@@ -20,8 +22,8 @@ def create_app(test_config=None):
     from api import flashcards
     app.register_blueprint(flashcards.bp)
 
-    from api import training
-    app.register_blueprint(training.bp)
+    # from api import training
+    # app.register_blueprint(training.bp)
 
     with app.app_context():
         init_db()

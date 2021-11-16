@@ -1,8 +1,8 @@
 from flask import jsonify, request, Blueprint, Response, abort
-from sqlalchemy import select
+from sqlalchemy import select, func, asc
 
 from api import db
-from api.flashcards.models import Flashcard, AttemptResult
+from api.flashcards.models import Flashcard, AttemptResult, TrainingSession
 
 bp = Blueprint('flashcards', __name__, url_prefix='/api')
 
@@ -48,3 +48,20 @@ def attempt_flashcard(flashcard_id):
     flashcard.bucket = flashcard.bucket + 1
     db.session.commit()
     return jsonify(AttemptResult(is_correct=True))
+
+
+@bp.route('/flashcards/session', methods=['GET'])
+def get_session():
+    query = select(Flashcard).order_by(asc(Flashcard.id))
+    flashcards = db.session.query(query).all()
+    return flashcards
+
+
+@bp.route('/flashcards/sessions', methods=['POST'])
+def create_session():
+    query = select(func.min(Flashcard.id))
+    min_id = db.session.execute(query).scalars().first()
+    training_session = TrainingSession(current_flashcard_id=min_id)
+    db.session.add(training_session)
+    db.session.commit()
+    return jsonify(training_session), 201
