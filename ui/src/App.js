@@ -1,12 +1,12 @@
 import './App.css'
-import FlashcardList from './FlashcardList'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
-} from "react-router-dom";
-import Practice from "./Practice";
+} from 'react-router-dom'
+import FlashcardList from './FlashcardList'
+import Practice from './Practice'
 
 function App() {
   return (
