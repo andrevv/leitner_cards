@@ -11,14 +11,17 @@ function Practice(props) {
         return iter
     }, [flashcards])
 
+    useEffect(() => {
+        fetch('http://localhost:5000/api/flashcards')
+            .then(resp => resp.json())
+            .then(data => {
+                setFlashcards(data)
+            })
+    }, [])
+
     return (
         <>
-            <button
-                className={'border rounded-lg shadow p-3 bg-green-500 hover:bg-green-700 text-white mt-2'}
-                onClick={getFlashcards}>
-                Start practicing
-            </button>
-            <div className={'container flex justify-center'}>
+            <div className={'container flex justify-center pt-24'}>
                 <div>
                     {current &&
                         <PracticeFlashcard
@@ -28,14 +31,6 @@ function Practice(props) {
             </div>
         </>
     )
-
-    function getFlashcards() {
-        fetch('http://localhost:5000/api/flashcards')
-            .then(resp => resp.json())
-            .then(data => {
-                setFlashcards(data)
-            })
-    }
 
     function onAnswer() {
         setCurrent(it.next().value)
