@@ -14,7 +14,10 @@ def create_app(test_config=None):
     if test_config:
         app.config['SQLALCHEMY_DATABASE_URI'] = test_config['SQLALCHEMY_DATABASE_URI']
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+        db_uri = os.environ['DATABASE_URL']
+        if db_uri.startswith('postgres://'):
+            db_uri = db_uri.replace('postgres://', 'postgresql://', 1)
+        app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     app.cli.add_command(init_db_command)
