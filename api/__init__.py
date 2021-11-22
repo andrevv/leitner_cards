@@ -27,9 +27,6 @@ def create_app(test_config=None):
     from api import flashcards
     app.register_blueprint(flashcards.bp)
 
-    with app.app_context():
-        init_db()
-
     CORS(app)
 
     return app
