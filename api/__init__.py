@@ -1,3 +1,5 @@
+import os
+
 import click
 from flask import Flask
 from flask.cli import with_appcontext
@@ -12,7 +14,7 @@ def create_app(test_config=None):
     if test_config:
         app.config['SQLALCHEMY_DATABASE_URI'] = test_config['SQLALCHEMY_DATABASE_URI']
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flashcard.db'
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     app.cli.add_command(init_db_command)
@@ -31,6 +33,7 @@ def create_app(test_config=None):
 
 
 def init_db():
+    db.drop_all()
     db.create_all()
 
 
