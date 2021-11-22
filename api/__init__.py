@@ -38,6 +38,7 @@ def create_app(test_config=None):
 def init_db():
     db.drop_all()
     db.create_all()
+    db.session.commit()
 
 
 @click.command('init-db')
