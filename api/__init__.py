@@ -10,7 +10,7 @@ db = SQLAlchemy()
 
 
 def create_app(test_config=None):
-    app = Flask(__name__, static_folder='../ui/build/static', static_url_path='/static')
+    app = Flask(__name__, static_folder='../build/static', static_url_path='/static')
     if test_config:
         app.config['SQLALCHEMY_DATABASE_URI'] = test_config['SQLALCHEMY_DATABASE_URI']
     else:

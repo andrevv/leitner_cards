@@ -16,11 +16,18 @@ function PracticeFlashcard(props) {
                     className={'mt-3 rounded w-full'}
                     value={answer}
                     onChange={e => setAnswer(e.target.value)} />
-                <button
-                    className={'border rounded-lg shadow p-3 bg-green-500 hover:bg-green-700 text-white mt-3 w-full'}
-                    onClick={() => attempt(props.flashcard, answer)}>
-                    Check
-                </button>
+                <div className={'mt-3 flex gap-2'}>
+                    <button
+                        className={'border rounded-lg shadow p-3 hover:bg-gray-100'}
+                        onClick={() => attempt(props.flashcard, answer)}>
+                        Show answer
+                    </button>
+                    <button
+                        className={'border rounded-lg shadow p-3 bg-green-500 hover:bg-green-700 text-white'}
+                        onClick={() => attempt(props.flashcard, answer)}>
+                        Check answer
+                    </button>
+                </div>
             </div>
         </>
     )
