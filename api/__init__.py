@@ -10,7 +10,7 @@ db = SQLAlchemy()
 
 
 def create_app(test_config=None):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../ui/build/static', static_url_path='/static')
     if test_config:
         app.config['SQLALCHEMY_DATABASE_URI'] = test_config['SQLALCHEMY_DATABASE_URI']
     else:
@@ -24,8 +24,9 @@ def create_app(test_config=None):
 
     app.url_map.strict_slashes = False
 
-    from api import flashcards
+    from api import flashcards, home
     app.register_blueprint(flashcards.bp)
+    app.register_blueprint(home.bp)
 
     CORS(app)
 
