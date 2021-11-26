@@ -9,7 +9,7 @@ function FlashcardList() {
   const [answer, setAnswer] = useState()
   
   useEffect(() => {
-    fetch('http://localhost:5000/api/flashcards')
+    fetch(`${process.env.REACT_APP_API_URL}/api/flashcards`)
       .then(resp => resp.json())
       .then(data => setFlashcards(data))
   }, [])
@@ -42,7 +42,7 @@ function FlashcardList() {
   )
 
   function addFlashcard(question, answer) {
-    fetch('http://localhost:5000/api/flashcards', {
+    fetch(`${process.env.REACT_APP_API_URL}/api/flashcards`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -53,7 +53,7 @@ function FlashcardList() {
       })
     })
     .then(() => {
-      fetch('http://localhost:5000/api/flashcards')
+      fetch(`${process.env.REACT_APP_API_URL}/api/flashcards`)
         .then(resp => resp.json())
         .then(data => {
           setFlashcards(data)

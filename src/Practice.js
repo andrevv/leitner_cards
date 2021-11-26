@@ -12,7 +12,7 @@ function Practice(props) {
     }, [flashcards])
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/flashcards')
+        fetch(`${process.env.REACT_APP_API_URL}/api/flashcards`)
             .then(resp => resp.json())
             .then(data => {
                 setFlashcards(data)

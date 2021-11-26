@@ -33,7 +33,7 @@ function PracticeFlashcard(props) {
     )
 
     function attempt(flashcard, answer) {
-        fetch(`http://localhost:5000/api/flashcards/${flashcard.id}/attempt`, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/flashcards/${flashcard.id}/attempt`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
