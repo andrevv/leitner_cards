@@ -6,11 +6,15 @@ from flask.cli import with_appcontext
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
+import constants
+
 db = SQLAlchemy()
 
 
 def create_app(test_config=None):
     app = Flask(__name__, static_folder='../build/static', static_url_path='/static')
+    app.secret_key = os.getenv(constants.SECRET_KEY)
+
     if test_config:
         app.config['SQLALCHEMY_DATABASE_URI'] = test_config['SQLALCHEMY_DATABASE_URI']
     else:
@@ -24,9 +28,13 @@ def create_app(test_config=None):
 
     app.url_map.strict_slashes = False
 
-    from api import flashcards, home
+    from api.auth import oauth
+    oauth.init_app(app)
+
+    from api import flashcards, home, auth
     app.register_blueprint(flashcards.bp)
     app.register_blueprint(home.bp)
+    app.register_blueprint(auth.bp)
 
     CORS(app)
 

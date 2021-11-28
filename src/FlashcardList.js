@@ -9,9 +9,8 @@ function FlashcardList() {
   const [answer, setAnswer] = useState()
   
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/flashcards`)
+    fetch('/api/flashcards')
       .then(resp => resp.json())
-      .then(data => setFlashcards(data))
   }, [])
 
   return (
@@ -42,7 +41,7 @@ function FlashcardList() {
   )
 
   function addFlashcard(question, answer) {
-    fetch(`${process.env.REACT_APP_API_URL}/api/flashcards`, {
+    fetch('/api/flashcards', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -53,7 +52,7 @@ function FlashcardList() {
       })
     })
     .then(() => {
-      fetch(`${process.env.REACT_APP_API_URL}/api/flashcards`)
+      fetch('/api/flashcards')
         .then(resp => resp.json())
         .then(data => {
           setFlashcards(data)

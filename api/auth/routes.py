@@ -69,4 +69,4 @@ def auth0_callback():
         'name': userinfo['name'],
         'picture': userinfo['picture']
     }
-    return redirect('/')
+    return redirect(os.getenv(constants.REACT_APP_BASE_URL))

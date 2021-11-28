@@ -11,6 +11,7 @@ import Practice from './Practice'
 function App() {
   return (
     <div className="container mx-auto">
+      <button onClick={() => window.location = '/api/auth/logout'}>Logout</button>
       <Router>
         <div>
           <ul className="flex gap-5 text-blue-700">

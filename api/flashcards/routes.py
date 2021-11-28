@@ -1,18 +1,22 @@
-from flask import jsonify, request, Blueprint, Response, abort
+from flask import jsonify, request, Blueprint, Response, abort, session
 from sqlalchemy import select, func, asc
 
+import constants
 from api import db
+from api.auth.routes import requires_auth
 from api.flashcards.models import Flashcard, AttemptResult, TrainingSession
 
 bp = Blueprint('flashcards', __name__, url_prefix='/api')
 
 
 @bp.route('/flashcards', methods=['GET'])
+@requires_auth
 def get_flashcards():
     return jsonify(Flashcard.query.all())
 
 
 @bp.route('/flashcards/<int:flashcard_id>', methods=['GET'])
+@requires_auth
 def get_flashcard_by_id(flashcard_id):
     query = select(Flashcard).where(Flashcard.id == flashcard_id)
     flashcard = db.session.execute(query).scalars().first()
@@ -22,6 +26,7 @@ def get_flashcard_by_id(flashcard_id):
 
 
 @bp.route('/flashcards/buckets/<int:bucket>', methods=['GET'])
+@requires_auth
 def get_flashcards_bucket(bucket):
     query = select(Flashcard).where(Flashcard.bucket == bucket)
     result = db.session.execute(query).scalars()
@@ -29,6 +34,7 @@ def get_flashcards_bucket(bucket):
 
 
 @bp.route('/flashcards', methods=['POST'])
+@requires_auth
 def add_flashcard():
     data = request.json
     flashcard = Flashcard(question=data['question'], answer=data['answer'], bucket=0)
@@ -38,6 +44,7 @@ def add_flashcard():
 
 
 @bp.route('/flashcards/<int:flashcard_id>/attempt', methods=['POST'])
+@requires_auth
 def attempt_flashcard(flashcard_id):
     query = select(Flashcard).where(Flashcard.id == flashcard_id)
     flashcard = db.session.execute(query).scalars().first()
@@ -51,6 +58,7 @@ def attempt_flashcard(flashcard_id):
 
 
 @bp.route('/flashcards/session', methods=['GET'])
+@requires_auth
 def get_session():
     query = select(Flashcard).order_by(asc(Flashcard.id))
     flashcards = db.session.query(query).all()
@@ -58,6 +66,7 @@ def get_session():
 
 
 @bp.route('/flashcards/sessions', methods=['POST'])
+@requires_auth
 def create_session():
     query = select(func.min(Flashcard.id))
     min_id = db.session.execute(query).scalars().first()
