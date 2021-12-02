@@ -41,6 +41,8 @@ class TrainingSession(db.Model):
 @dataclass
 class AttemptResult:
     is_correct: bool
+    answer: str
 
-    def __init__(self, is_correct):
+    def __init__(self, is_correct, answer):
         self.is_correct = is_correct
+        self.answer = answer

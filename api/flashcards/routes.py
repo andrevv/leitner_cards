@@ -51,10 +51,10 @@ def attempt_flashcard(flashcard_id):
     if not flashcard:
         abort(404, description='Flashcard not found.')
     if flashcard.answer != request.json['answer']:
-        return jsonify(AttemptResult(is_correct=False))
+        return jsonify(AttemptResult(is_correct=False, answer=flashcard.answer))
     flashcard.bucket = flashcard.bucket + 1
     db.session.commit()
-    return jsonify(AttemptResult(is_correct=True))
+    return jsonify(AttemptResult(is_correct=True, answer=flashcard.answer))
 
 
 @bp.route('/flashcards/session', methods=['GET'])

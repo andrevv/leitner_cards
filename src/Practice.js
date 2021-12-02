@@ -3,19 +3,15 @@ import PracticeFlashcard from './PracticeFlashcard'
 
 function Practice(props) {
     const [flashcards, setFlashcards] = useState([])
+    const [index, setIndex] = useState(0)
     const [current, setCurrent] = useState()
-
-    const it = useMemo(() => {
-        const iter = gen(flashcards)
-        setCurrent(iter.next().value)
-        return iter
-    }, [flashcards])
 
     useEffect(() => {
         fetch('/api/flashcards')
             .then(resp => resp.json())
             .then(data => {
                 setFlashcards(data)
+                setIndex(0)
             })
     }, [])
 
@@ -23,21 +19,22 @@ function Practice(props) {
         <>
             <div className={'container flex justify-center pt-24'}>
                 <div>
-                    {current &&
+                    {index < flashcards.length &&
                         <PracticeFlashcard
-                            flashcard={current}
-                            onAnswer={onAnswer} />}
+                            flashcard={flashcards[index]}
+                            onAnswer={onAnswer} />
+                    }
+                    {index === flashcards.length &&
+                        <h1 className={'text-3xl'}>All done!</h1>
+                    }
                 </div>
             </div>
         </>
     )
 
     function onAnswer() {
-        setCurrent(it.next().value)
-    }
-
-    function* gen(arr) {
-        yield* arr
+        setCurrent(flashcards[index])
+        setIndex(index + 1)
     }
 }
 

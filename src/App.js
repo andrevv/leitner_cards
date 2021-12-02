@@ -33,7 +33,9 @@ function App() {
                                 <button onClick={() => window.location = '/api/auth/logout'}>
                                     <div className="flex items-center gap-1">
                                         <LogoutIcon className="w-5 h-5" />
-                                        Logout
+                                        <span>
+                                            Logout
+                                        </span>
                                     </div>
                                 </button>
                             </li>
