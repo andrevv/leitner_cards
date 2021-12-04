@@ -3,16 +3,20 @@ import os
 import click
 from flask import Flask
 from flask.cli import with_appcontext
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 import constants
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 
 def create_app(test_config=None):
     app = Flask(__name__, static_folder='../build/static', static_url_path='/static')
     app.secret_key = os.getenv(constants.SECRET_KEY)
+
+    migrate.init_app(app=app, db=db)
 
     if test_config:
         app.config['SQLALCHEMY_DATABASE_URI'] = test_config['SQLALCHEMY_DATABASE_URI']
