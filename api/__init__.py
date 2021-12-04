@@ -3,7 +3,6 @@ import os
 import click
 from flask import Flask
 from flask.cli import with_appcontext
-from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
 import constants
@@ -35,8 +34,6 @@ def create_app(test_config=None):
     app.register_blueprint(flashcards.bp)
     app.register_blueprint(home.bp)
     app.register_blueprint(auth.bp)
-
-    CORS(app)
 
     return app
 
