@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import List
+
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -12,16 +14,33 @@ class Flashcard(db.Model):
     question: str
     answer: str
     bucket: int
+    deck_id: int
 
     id = Column('id', Integer, primary_key=True)
     question = Column('question', String, nullable=False)
     answer = Column('answer', String, nullable=False)
     bucket = Column('bucket', Integer, nullable=False)
+    deck_id = Column('deck_id', Integer, ForeignKey('decks.id'), nullable=False)
 
     def __init__(self, question, answer, bucket):
         self.question = question
         self.answer = answer
         self.bucket = bucket
+
+
+@dataclass
+class Deck(db.Model):
+    __tablename__ = 'decks'
+    id: int
+    name: str
+    flashcards: List[Flashcard]
+
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String, nullable=False)
+    flashcards = relationship('Flashcard')
+
+    def __init__(self, name):
+        self.name = name
 
 
 @dataclass
